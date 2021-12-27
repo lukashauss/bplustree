@@ -128,13 +128,16 @@ struct innerNode* split_node(struct innerNode* node, struct node* child, int key
     for (j = med+1; j < MAX_NODE_SIZE; j++) {
         newNode->super.keys[j-med-1] = node->super.keys[j];
         newNode->children[j-med-1] = node->children[j];
+        newNode->children[j-med-1]->parent = newNode;
 
         newNode->super.filled++;
     }
     newNode->super.keys[j-med-1] = tempK;
     newNode->children[j-med-1] = node->children[j];
+    newNode->children[j-med-1]->parent = newNode;
     j++;
     newNode->children[j-med-1] = tempN;
+    newNode->children[j-med-1]->parent = newNode;
     newNode->super.filled++;
 
     newNode->super.parent = node->super.parent;
@@ -250,36 +253,12 @@ void print_dot(struct node* root, int from, int to) {
 
 int main() {
 
-    struct node* tree = insert(NULL, 4, 4);
-    printTree(tree);
-    tree = insert(tree, 1, 1);
-    printTree(tree);
-    tree = insert(tree, 7, 7);
-    printTree(tree);
-    tree = insert(tree, 9, 9);
-    printTree(tree);
-    tree = insert(tree, 2, 2);
-    printTree(tree);
-    tree = insert(tree, 3, 3);
-    printTree(tree);
-    tree = insert(tree, 10, 10);
-    printTree(tree);
-    tree = insert(tree, 5, 5);
-    printTree(tree);
-    tree = insert(tree, 6, 6);
-    printTree(tree);
-    tree = insert(tree, 11, 11);
-    printTree(tree);
-    tree = insert(tree, 12, 12);
-    printTree(tree);
-    tree = insert(tree, 13, 13);
-    printTree(tree);
-    tree = insert(tree, 14, 14);
-    printTree(tree);
-    tree = insert(tree, 15, 15);
-    printTree(tree);
-    tree = insert(tree, 16, 16);
-    printTree(tree);
+    struct node* tree = NULL;
+    for (int i = 0; i < 30; i++) {
+        int j = rand() % 100;
+        tree = insert(tree, j, j);
+        printTree(tree);
+    }
 
     return 0;
 }

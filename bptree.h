@@ -1,4 +1,4 @@
-#define MAX_DEGREE 5
+#define MAX_DEGREE 7
 #define MAX_NODE_SIZE (MAX_DEGREE-1)
 
 enum NodeTypes {
