@@ -183,6 +183,7 @@ struct node* insert(struct node *root, int key, int value) {
             curr->keys[j] = curr->keys[j-1];
         }
         curr->keys[i] = key;
+        ((struct leafNode*)curr)->values[i] = value;
         curr->filled++;
 
      //overflow 
@@ -216,14 +217,14 @@ struct node* insert(struct node *root, int key, int value) {
 int lookup(struct node* root, int key) {
     if (root == NULL) {
         printf("Tree is empty.\n");
-        exit(-1);
+        return -1;
     }
     struct node* curr = root;
     //traverse to leaf
     while (curr->type != LEAF) {
         //find next child
         int i = 0;
-        while (i < curr->filled && curr->keys[i] < key)
+        while (i < curr->filled && curr->keys[i] <= key)
             i++;
         curr = ((struct innerNode*)curr)->children[i];
     }
@@ -231,9 +232,9 @@ int lookup(struct node* root, int key) {
     int i = 0;
     while (i < curr->filled && curr->keys[i] < key)
         i++;
-    if (i = curr->filled) {
+    if (i == curr->filled) {
         printf("Key not found in the tree.\n");
-        exit(-1);
+        return -1;
     } else {
         return ((struct leafNode*)curr)->values[i];
     }
@@ -287,7 +288,7 @@ int main() {
     }
 
     for (int i = 0; i < 30; i++)
-        printf("%d\n", lookup(tree, i);
+        printf("%d\n", lookup(tree, i));
 
     return 0;
 }
