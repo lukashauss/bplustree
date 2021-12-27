@@ -213,6 +213,33 @@ struct node* insert(struct node *root, int key, int value) {
 
 }
 
+int lookup(struct node* root, int key) {
+    if (root == NULL) {
+        printf("Tree is empty.\n");
+        exit(-1);
+    }
+    struct node* curr = root;
+    //traverse to leaf
+    while (curr->type != LEAF) {
+        //find next child
+        int i = 0;
+        while (i < curr->filled && curr->keys[i] < key)
+            i++;
+        curr = ((struct innerNode*)curr)->children[i];
+    }
+    //find key in leaf
+    int i = 0;
+    while (i < curr->filled && curr->keys[i] < key)
+        i++;
+    if (i = curr->filled) {
+        printf("Key not found in the tree.\n");
+        exit(-1);
+    } else {
+        return ((struct leafNode*)curr)->values[i];
+    }
+
+}
+
 void printTree(struct node* root) {
 /*    for (int i = 0; i < root->filled; i++)
         printf("%d  ", root->keys[i]);
@@ -255,10 +282,12 @@ int main() {
 
     struct node* tree = NULL;
     for (int i = 0; i < 30; i++) {
-        int j = rand() % 100;
-        tree = insert(tree, j, j);
+        tree = insert(tree, i, i);
         printTree(tree);
     }
+
+    for (int i = 0; i < 30; i++)
+        printf("%d\n", lookup(tree, i);
 
     return 0;
 }

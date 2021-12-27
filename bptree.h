@@ -43,5 +43,7 @@ struct node* insert_node(struct node *root, struct innerNode* node, struct node*
 
 struct leafNode* splitLeaf(struct leafNode* leaf, int key, int value);
 
+int lookup(struct node* root, int key);
+
 void printTree(struct node* root);
 void print_dot(struct node* root, int from, int to);
