@@ -9,6 +9,15 @@ struct leafNode* splitLeaf(struct leafNode* leaf, int key, int value) {
     newLeaf->super.type = LEAF;
     newLeaf->super.filled = 0;
 
+    //reorder linked list
+    newLeaf->prev = leaf;
+    newLeaf->next = leaf->next;
+
+    if (leaf->next != NULL)
+        leaf->next->prev = newLeaf;
+
+    leaf->next = newLeaf;
+
     //find index for insertion
     int i = 0;
     while (i < leaf->super.filled && leaf->super.keys[i] < key)
@@ -154,6 +163,9 @@ struct node* insert(struct node *root, int key, int value) {
         newNode->super.keys[0] = key;
         newNode->values[0] = value;
         newNode->super.filled = 1;
+
+        newNode->prev = NULL;
+        newNode->next = NULL;
 
         return (struct node*) newNode;
     }
