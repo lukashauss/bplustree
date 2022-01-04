@@ -1,16 +1,11 @@
-#define MAX_DEGREE 20
+#define MAX_DEGREE 6
 #define MAX_NODE_SIZE (MAX_DEGREE-1)
+#define MIN_NODE_SIZE MAX_DEGREE / 2 - 1
 
 enum NodeTypes {
     INNER, LEAF
 };
 
-/*
-struct keyList {
-    struct keyList *next;
-    int key;
-}
-*/
 
 //polymorphic node 
 struct node {
@@ -43,7 +38,12 @@ struct node* insert_node(struct node *root, struct innerNode* node, struct node*
 
 struct leafNode* splitLeaf(struct leafNode* leaf, int key, int value);
 
+struct leafNode* empty_leaf();
+
+struct innerNode* empty_innerNode();
+
 int lookup(struct node* root, int key);
 
 void printTree(struct node* root);
+
 void print_dot(struct node* root, int from, int to);
